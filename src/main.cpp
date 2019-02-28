@@ -3,15 +3,15 @@
 
 const int LENGHT = 1000;
 const int HEIGHT = 800;
-const int RADIUS = 20;
+const int SIZE = 30;
 
 int main()
 {
     sf::Vector2f pos = {30, 30};
     sf::Vector2f speed = {300, 300};
     sf::RenderWindow window(sf::VideoMode(LENGHT, HEIGHT), "Player");
-    sf::CircleShape ball;
-    ball.setRadius(RADIUS);
+    sf::RectangleShape ball;
+    ball.setSize(sf::Vector2f(SIZE,SIZE));
     ball.setFillColor(sf::Color::White);
     sf::Clock clock;
     while (window.isOpen())
@@ -28,11 +28,11 @@ int main()
             }
         }
 
-        if (ball.getPosition().x <= RADIUS && speed.x < 0 || ball.getPosition().x >= LENGHT - RADIUS && speed.x > 0)
+        if (ball.getPosition().x <= SIZE/2 && speed.x < 0 || ball.getPosition().x >= LENGHT - SIZE/2 && speed.x > 0)
         {
             speed.x = -speed.x*1.01;
         }
-        if (ball.getPosition().y <= RADIUS && speed.y < 0 || ball.getPosition().y >= HEIGHT - RADIUS && speed.y > 0)
+        if (ball.getPosition().y <= SIZE/2 && speed.y < 0 || ball.getPosition().y >= HEIGHT - SIZE/2 && speed.y > 0)
         {
             speed.y = -speed.y*1.01;
         }
@@ -40,7 +40,7 @@ int main()
         pos.x += speed.x * deltatime;
         pos.y += speed.y * deltatime;
         ball.setPosition(pos);
-        ball.setOrigin(RADIUS,RADIUS);
+        ball.setOrigin(SIZE/2,SIZE/2);
         window.clear();
         window.draw(ball);
         window.display();
