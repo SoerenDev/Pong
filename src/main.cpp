@@ -13,13 +13,14 @@ int main()
     sf::Vector2f pos = {30, 30};
     sf::Vector2f speed = {300, 300};
     sf::RectangleShape ball;
-    ball.setSize(sf::Vector2f(SIZE,SIZE));
+    ball.setSize(sf::Vector2f(SIZE, SIZE));
     ball.setFillColor(sf::Color::White);
-    
+    ball.setOrigin(SIZE / 2, SIZE / 2);
+
     sf::RectangleShape player;
     player.setSize(PLAYER_SIZE);
-    sf::Vector2f PlayerPosition = {LENGHT/2,HEIGHT*0.9};
-    player.setOrigin(PLAYER_SIZE.x/2,PLAYER_SIZE.y/2);
+    sf::Vector2f PlayerPosition = {LENGHT / 2, HEIGHT * 0.9};
+    player.setOrigin(PLAYER_SIZE.x / 2, PLAYER_SIZE.y / 2);
 
     sf::Clock clock;
 
@@ -35,37 +36,43 @@ int main()
             {
                 window.close();
             }
-            
         }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && PlayerPosition.x <= LENGHT - PLAYER_SIZE.x/2) {
-                PlayerPosition.x += 700*deltatime;
-            }
-
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && PlayerPosition.x >= PLAYER_SIZE.x/2) {
-            PlayerPosition.x -= 700*deltatime;
-        }
-
-
-        if (ball.getPosition().x <= SIZE/2 && speed.x < 0 || ball.getPosition().x >= LENGHT - SIZE/2 && speed.x > 0)
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && PlayerPosition.x <= LENGHT - PLAYER_SIZE.x / 2)
         {
-            speed.x = -speed.x*1.01;
+            PlayerPosition.x += 700 * deltatime;
         }
-        if (ball.getPosition().y <= SIZE/2 && speed.y < 0 || ball.getPosition().y >= HEIGHT - SIZE/2 && speed.y > 0)
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && PlayerPosition.x >= PLAYER_SIZE.x / 2)
         {
-            speed.y = -speed.y*1.01;
+            PlayerPosition.x -= 700 * deltatime;
+        }
+
+        if (ball.getPosition().x <= SIZE / 2 && speed.x < 0 || ball.getPosition().x >= LENGHT - SIZE / 2 && speed.x > 0)
+        {
+            speed.x = -speed.x * 1.01;
+        }
+        if (ball.getPosition().y <= SIZE / 2 && speed.y < 0 || player.getGlobalBounds().intersects(ball.getGlobalBounds()) && speed.y > 0)
+        {
+            speed.y = -speed.y * 1.01;
+        }
+        if (ball.getPosition().y > HEIGHT + SIZE * 2)
+        {
+            window.close();
         }
 
         pos.x += speed.x * deltatime;
         pos.y += speed.y * deltatime;
         ball.setPosition(pos);
         player.setPosition(PlayerPosition);
-        ball.setOrigin(SIZE/2,SIZE/2);
         window.clear();
         window.draw(ball);
         window.draw(player);
         window.display();
         //std::cout << "x:" << ball.getPosition().x << "y: " << ball.getPosition().y << std::endl;
+        /*if(player.getGlobalBounds().intersects(ball.getGlobalBounds())) {
+            std::cout << "Hallo";
+        }*/
     }
 
     return 0;
