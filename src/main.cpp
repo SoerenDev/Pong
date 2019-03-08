@@ -69,10 +69,7 @@ int main()
         window.draw(ball);
         window.draw(player);
         window.display();
-        //std::cout << "x:" << ball.getPosition().x << "y: " << ball.getPosition().y << std::endl;
-        /*if(player.getGlobalBounds().intersects(ball.getGlobalBounds())) {
-            std::cout << "Hallo";
-        }*/
+
     }
 
     return 0;
