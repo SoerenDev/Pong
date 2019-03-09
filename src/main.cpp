@@ -96,6 +96,7 @@ void player_movement() {
     {
         playerPosition.x -= 700 * deltatime;
     }
+    
     player.setPosition(playerPosition);
 
 }
