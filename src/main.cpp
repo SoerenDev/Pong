@@ -2,13 +2,13 @@
 
 const int LENGHT = 1000;
 const int HEIGHT = 800;
-const int SIZE = 30;
+const int RADIUS = 20;
 const sf::Vector2f PLAYER_SIZE(100.f,30.f);
 
 double deltatime;
 sf::Vector2f playerPosition;
 sf::RectangleShape player;
-sf::RectangleShape ball;
+sf::CircleShape ball;
 sf::Vector2f speed(300.f,300.f);
 sf::Vector2f pos(30.f,30.f);
 sf::RenderWindow window(sf::VideoMode(LENGHT, HEIGHT), "Player");
@@ -18,18 +18,14 @@ void ball_movement();
 void game_over();
 void ball_physics();
 void draw();
+void init_ball();
+void init_player();
 
 int main()
 {
-  
-    ball.setSize(sf::Vector2f(SIZE, SIZE));
-    ball.setFillColor(sf::Color::White);
-    ball.setOrigin(SIZE / 2, SIZE / 2);
-   
-    player.setSize(PLAYER_SIZE);
-    playerPosition = {LENGHT / 2, HEIGHT * 0.9};
-    player.setOrigin(PLAYER_SIZE.x / 2, PLAYER_SIZE.y / 2);
-
+    init_ball();
+    init_player();
+    
     sf::Clock clock;
 
     while (window.isOpen())
@@ -47,13 +43,9 @@ int main()
         }
 
         player_movement();
-
         ball_movement();
-
         game_over();
-
         ball_physics(); 
-        
         draw();
     
     }
@@ -78,7 +70,7 @@ void ball_physics() {
 
 void game_over() {
 
-    if (ball.getPosition().y > HEIGHT + SIZE * 2)
+    if (ball.getPosition().y > HEIGHT + RADIUS * 2)
     {
         window.close();
     }
@@ -103,14 +95,30 @@ void player_movement() {
 
 void ball_movement() {
 
-    if (ball.getPosition().x <= SIZE / 2 && speed.x < 0 || ball.getPosition().x >= LENGHT - SIZE / 2 && speed.x > 0)
+    if (ball.getPosition().x <= RADIUS && speed.x < 0 || ball.getPosition().x >= LENGHT - RADIUS && speed.x > 0)
     {
         speed.x = -speed.x * 1.01;
     }
 
-    if (ball.getPosition().y <= SIZE / 2 && speed.y < 0 || player.getGlobalBounds().intersects(ball.getGlobalBounds()) && speed.y > 0)
+    if (ball.getPosition().y <= RADIUS && speed.y < 0 || player.getGlobalBounds().intersects(ball.getGlobalBounds()) && speed.y > 0)
     {
         speed.y = -speed.y * 1.01;
     }
+
+}
+
+void init_ball() {
+    
+    ball.setRadius(RADIUS);
+    ball.setFillColor(sf::Color::White);
+    ball.setOrigin(RADIUS, RADIUS);
+
+}
+
+void init_player() {
+
+    player.setSize(PLAYER_SIZE);
+    playerPosition = {LENGHT / 2, HEIGHT * 0.9};
+    player.setOrigin(PLAYER_SIZE.x / 2, PLAYER_SIZE.y / 2);
 
 }
