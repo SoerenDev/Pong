@@ -21,8 +21,8 @@ void draw();
 void init_ball();
 void init_player();
 
-int main()
-{
+int main() {
+    
     init_ball();
     init_player();
     
@@ -51,6 +51,7 @@ int main()
     }
 
     return 0;
+    
 }
 
 void draw() {
