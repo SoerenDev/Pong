@@ -96,12 +96,12 @@ void player_movement() {
 
 void ball_movement() {
 
-    if (ball.getPosition().x <= RADIUS && speed.x < 0 || ball.getPosition().x >= LENGHT - RADIUS && speed.x > 0)
+    if ((ball.getPosition().x <= RADIUS && speed.x < 0) || (ball.getPosition().x >= LENGHT - RADIUS && speed.x > 0))
     {
         speed.x = -speed.x * 1.01;
     }
 
-    if (ball.getPosition().y <= RADIUS && speed.y < 0 || player.getGlobalBounds().intersects(ball.getGlobalBounds()) && speed.y > 0)
+    if ((ball.getPosition().y <= RADIUS && speed.y < 0) || (player.getGlobalBounds().intersects(ball.getGlobalBounds()) && speed.y > 0))
     {
         speed.y = -speed.y * 1.01;
     }
